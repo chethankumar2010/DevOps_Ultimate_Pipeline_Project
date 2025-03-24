@@ -1,2 +1,46 @@
-Create a VM for Prometheus & Grafhana installation
-Install Prometheus & Grafhana
+1. Create a VM for Prometheus & Grafana installation
+  Install Prometheus
+    sudo apt update
+  Link: 
+  prometheus.io/downloads
+  extract it and run the installer in the background
+   eg: ./prometheus &
+  to access prometheus 
+    IP:9090   --- prometheus will be running on the port 9090
+
+2. Installation of 
+    Grafhana -> downloads
+    run 3 lines
+  
+    To run Grafana server
+      sudo /bin/systemctl start grafana-server  --- it will start the Grafana server
+      To access
+      IP_of_VM:3000   --- Grafana will be running on the port 3000
+
+3. Installation of BlackBox exporter -- to monitor the Web applications
+    1. download the blackbox_exporter package for linux
+    2. Unzip and run the installer as background process
+        ./blackbox_exporter &
+    3. launch the UI
+      IP:9115  -- port where blackbox_exporter is running
+  
+4. Add the blackbox_exporter scrafe configs to the prometheus.yml
+        1. Modify the hostname
+        2. add the static configs -- targets
+            http://prometheus.io
+            http://url of application:port
+        3. save
+
+5. Restart Prometheus
+    1. run command --->  prgrep prometheus  -- you will get proccess id
+    2. kill the proccess using kill command
+      kill <id>
+    3. ./prometheus &
+
+6. Adding Prometheus as Data source inside Grafana
+    1. Adding data source
+        Home - Connections - Data sources - add data source --add prometheus -- url -save
+    2. Importing the data source
+        1. search - blackbox grafana dashboard -- copy the ID
+        2. Paste it in the Grafana import dashboard and select data source -- import
+      
